@@ -12,7 +12,7 @@ winstreak = 0
 defaites = 0
 
 
-
+#La fonction pour les regles du jeu et le contexte
 def regles():
    print("\nBienvenue dans le donjon. Vous allez devoir combattre des monstres de differents niveaux pour affronter le boss du donjon. \n"
          "Pour réussir un combat, il faut que la valeur du dé lancé soit supérieure à la force de l’adversaire. \n"
@@ -22,33 +22,27 @@ def regles():
          "\nVoici votre premier monstre")
 
 
-def menu():
-   print("Que voulez-vous faire? \n"
-         "1. Combattre cet adversaire \n"
-         "2. Contourner cet adversaire et aller ouvrir une autre porte \n"
-         "3. Afficher les règles du jeu \n"
-         "4. Quitter la partie \n")
-
-
+#La fonction pour le jeu
 def jeu():
    global vies
    global victoires
    global winstreak
    global defaites
    choix = 0
-   while vies <= 0 and choix != 4:
-       if victoires == 1 or winstreak == 3:
+   while vies > 0 and choix != 4:
+       if victoires == 10 or winstreak == 5:
            print("Vous avez battu assez de monstres. \n"
                  "Le boss a beaucoup plus de vies que les monstres normaux.\n"
                  "Il va falloir lui infliger 20 dégats pour le vaincre.\n"
                  "Vous avez 3 boucliers, 1 potion de vie et 1 épée que vous avez trouvé dans la salle.\n"
                  "Les boucliers vous permettent de bloquer 1 attaque du boss.\n"
                  "La potion de vie vous donne 3 ponits de vie. \n"
-                 "L'épée vous donne 2 degats bonus")
-           vies_boss = 20
+                 "L'épée vous donne 2 degats bonus\n")
+           vies_boss = 35
            boucliers = 3
            potion_vie = 1
            while vies_boss >= 0:
+
                if vies <= 0:
                    print(" \nVous n'avez plus de points de vie. \n"
                          "GAME OVER")
@@ -69,8 +63,8 @@ def jeu():
                    print("Votre attaque a une puissance de", attaque3, "et", attaque4)
                    print("Votre attaque a une puissance totale de", attaque_totale2)
                    print("Le boss perd", attaque_totale2, "point(s) de vie")
-                   print("Vies du boss:", vies_boss)
                    vies_boss = vies_boss - attaque_totale2
+                   print("Vies du boss:", vies_boss)
                    print("Le boss vous fait", force_boss, "degats")
                    vies = vies - force_boss
                    print("Vies:", vies)
@@ -111,34 +105,37 @@ def jeu():
                    vies = vies - force_boss
                    print("Vies:", vies)
 
+           if vies_boss <= 0:
+               print("Bravo!!!!! Vous avez battu le boss"
+                     "")
 
        force_ennemis = random.randint(1, 10)
-       print("Le montre a une puissance de", force_ennemis)
-       choix = input(menu())
+       print("\nLe montre a une puissance de", force_ennemis)
+       choix = input("Que voulez-vous faire? \n"
+                     "1. Combattre cet adversaire \n"
+                     "2. Contourner cet adversaire et aller ouvrir une autre porte \n"
+                     "3. Afficher les règles du jeu \n"
+                     "4. Quitter la partie \n")
 
        if choix == "1":
-           attaque = random.randint(3, 8)
-           attaque2 = random.randint(3, 8)
+           attaque = random.randint(1, 6)
+           attaque2 = random.randint(1, 6)
            attaque_totale = attaque + attaque2
            print("Votre attaque a une puissance de", attaque, "et", attaque2)
            print("Votre attaque a une puissance totale de", attaque_totale)
            print("Le montre a une puissance de", force_ennemis)
 
-           if attaque > force_ennemis:
+           if attaque_totale > force_ennemis:
                victoires += 1
                winstreak += 1
                vies = vies + force_ennemis
                print("Vous avez battu le montre, vous avez ganger", force_ennemis, "point(s) de vie")
-               victoires = +1
-               winstreak = +1
-               vies = vies + force_ennemis
-               print("vous avez battu le montre. vous avez ganger", force_ennemis, "points de vies")
                print("Vies:", vies)
                print("Victoires:", victoires)
                print("Winstreak:", winstreak)
                print("Défaites:", defaites)
 
-           elif attaque <= force_ennemis:
+           elif attaque_totale <= force_ennemis:
                vies = vies - force_ennemis
                defaites += 1
                winstreak = 0
