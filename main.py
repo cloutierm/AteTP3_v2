@@ -30,6 +30,7 @@ def jeu():
    global defaites
    choix = 0
    while vies > 0 and choix != 4:
+       #Si le joueur a eu aasez de victoires, il peut combattre le boss
        if victoires == 10 or winstreak == 5:
            print("Vous avez battu assez de monstres. \n"
                  "Le boss a beaucoup plus de vies que les monstres normaux.\n"
