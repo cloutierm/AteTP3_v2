@@ -22,19 +22,20 @@ def regles():
          "\nVoici votre premier monstre")
 
 
-#La fonction pour le jeu
+#Tu es dans un donjon et tu combats des monstres, potentionellement un boss, et tu dois survivre le plus longtemps
 def jeu():
    global vies
    global victoires
    global winstreak
    global defaites
    choix = 0
+   #Code pour le combat du boss
    while vies > 0 and choix != 4:
-       #Si le joueur a eu aasez de victoires, il peut combattre le boss
+       #Si le joueur a eu assez de victoires, il peut combattre le boss
        if victoires == 10 or winstreak == 5:
-           print("Vous avez battu assez de monstres. \n"
+           print("\nVous avez battu assez de monstres. \n"
                  "Le boss a beaucoup plus de vies que les monstres normaux.\n"
-                 "Il va falloir lui infliger 20 dégats pour le vaincre.\n"
+                 "Il va falloir lui infliger 35 dégats pour le vaincre.\n"
                  "Vous avez 3 boucliers, 1 potion de vie et 1 épée que vous avez trouvé dans la salle.\n"
                  "Les boucliers vous permettent de bloquer 1 attaque du boss.\n"
                  "La potion de vie vous donne 3 ponits de vie. \n"
@@ -42,12 +43,8 @@ def jeu():
            vies_boss = 35
            boucliers = 3
            potion_vie = 1
-           while vies_boss >= 0:
-
-               if vies <= 0:
-                   print(" \nVous n'avez plus de points de vie. \n"
-                         "GAME OVER")
-                   sys.exit()
+           #Le combat contre le boss continue tant que vous ou le boss n'êtes pas mort
+           while vies_boss > 0 and vies > 0:
 
                force_boss = random.randint(1, 10)
                print("Le boss vous attaque avec une puissance de", force_boss)
@@ -55,7 +52,7 @@ def jeu():
                               "1- Attaquer le boss\n"
                               "2- Bloquer l'attaque du boss\n"
                               "3- Utiliser la potion de vie\n")
-
+               #Attauqer le boss
                if choix2 == "1":
                    print("Vous attaquer le boss")
                    attaque3 = random.randint(3, 8)
@@ -69,24 +66,24 @@ def jeu():
                    print("Le boss vous fait", force_boss, "degats")
                    vies = vies - force_boss
                    print("Vies:", vies)
-
+               #Bloquer l'attauqe du boss
                elif choix2 == "2":
 
-                   if boucliers == 0:
+                   if boucliers <= 0:
                        print("Vous n'avez plus de bouclier.\n"
                              "Vous bloquer rien.\n"
                              "Le boss vous attque.\n")
                        print("Le boss vous fait", force_boss, "degats")
                        vies = vies - force_boss
                        print("Vies:", vies)
-
-                   boucliers -= 1
-                   print("Vous utiliser un bouclier.\n"
-                         "Il vous reste", boucliers, "bouclier(s)")
-
+                   else:
+                       boucliers -= 1
+                       print("Vous utiliser un bouclier.\n"
+                             "Il vous reste", boucliers, "bouclier(s)")
+               #Utiliser la potion de vie
                elif choix2 == "3":
 
-                   if potion_vie == 0:
+                   if potion_vie <= 0:
                        print("Vous buvez une potion vide.\n"
                              "Rien ne se passe.\n"
                              "Le boss vous attque.\n")
@@ -96,9 +93,10 @@ def jeu():
 
                    else:
                        print("Vous utiliser une potion de vie")
-                       vies = +5
+                       vies = vies +5
                        potion_vie = 0
-
+                       print("Vies:", vies)
+               #Le joueur ne fait rien ou le choix est mauvais
                else:
                    print("Vous ne faites rien.\n"
                          "le boss vous attque.\n")
@@ -109,6 +107,8 @@ def jeu():
            if vies_boss <= 0:
                print("Bravo!!!!! Vous avez battu le boss"
                      "")
+               victoires = 0
+               winstreak = 0
 
        force_ennemis = random.randint(1, 10)
        print("\nLe montre a une puissance de", force_ennemis)
@@ -160,15 +160,10 @@ def jeu():
 
        elif choix == "4":
            print("Vous avez quitté le jeu")
+           sys.exit()
 
        else:
            print("Votre choix n'est pas bon, vieullez ressayer \n")
-
-   if vies <= 0:
-       print(" \nVous n'avez plus de points de vie. \n"
-             "GAME OVER")
-       sys.exit()
-
 
 
 regles()
